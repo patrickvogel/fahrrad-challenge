@@ -30,7 +30,20 @@ class Fahrrad_Challenge_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
+		global $wpdb;
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
+		$table_name = $wpdb->prefix . 'fahrrad_challenge_entries';
+		
+		$sql = "CREATE TABLE $table_name (
+				`user_id` bigint(20) UNSIGNED NOT NULL,
+				`date` date NOT NULL,
+				`distance` float NOT NULL,
+				`co2` BOOLEAN NOT NULL,
+    			PRIMARY KEY(`user_id`, `date`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+	
+		dbDelta($sql);
 	}
 
 }
